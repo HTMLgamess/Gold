@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vertex Gold</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #0d0d0d;
+      --panel-soft: #131313;
+      --gold-1: #ffe08a;
+      --gold-2: #ffbf3f;
+      --gold-3: #cfa335;
+      --text: #f5f5f5;
+      --muted: #9b9b9b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Inter, sans-serif; }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 500px at 20% -10%, rgba(255,200,90,.15), transparent 60%),
+        radial-gradient(900px 500px at 80% 0%, rgba(255,200,90,.12), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(5,5,5,.7);
+      border-bottom: 1px solid rgba(255,215,120,.12);
+    }
+
+    .nav {
+      max-width: 1300px;
+      margin: auto;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 1.7rem;
+      letter-spacing: 1px;
+      background: linear-gradient(120deg, #fff, var(--gold-1), #fff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 6s linear infinite;
+    }
+
+    .nav a button {
+      background: linear-gradient(135deg, var(--gold-1), var(--gold-3));
+      border: none;
+      padding: 12px 22px;
+      border-radius: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 0 35px rgba(255,215,120,.45);
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .nav a button:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 65px rgba(255,215,120,.8);
+    }
+
+    .hero {
+      max-width: 1300px;
+      margin: auto;
+      padding: 110px 28px 80px;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 70px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 6vw, 4.6rem);
+      font-weight: 900;
+      line-height: 1.02;
+      margin-bottom: 22px;
+      background: linear-gradient(120deg, #fff, var(--gold-1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 520px;
+      margin-bottom: 34px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold-1), var(--gold-3));
+      border: none;
+      padding: 16px 30px;
+      font-weight: 900;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 45px rgba(255,215,120,.55);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 60px rgba(255,215,120,0.75), 0 0 120px rgba(255,215,120,0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255,215,120,.45);
+      color: var(--gold-1);
+      padding: 16px 30px;
+      border-radius: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .hero-card {
+      position: relative;
+      background: linear-gradient(180deg, #171104, #090909);
+      border-radius: 30px;
+      padding: 36px 34px;
+      border: 1px solid rgba(255,215,120,.18);
+      box-shadow:
+        inset 0 0 50px rgba(255,215,120,.05),
+        0 25px 90px rgba(0,0,0,.9);
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(255,215,120,.06),
+        transparent
+      );
+      animation: spin 22s linear infinite;
+      pointer-events: none;
+    }
+
+    .hero-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 22px;
+      color: var(--gold-1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      margin: 18px 0;
+      font-size: 1.05rem;
+      color: #e6e6e6;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer {
+      margin-top: auto;
+      border-top: 1px solid rgba(255,215,120,.12);
+      padding: 32px 24px;
+      text-align: center;
+      color: #888;
+      font-size: .9rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ===== POPUP ===== */
+    #popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #popup-box {
+      position: relative;
+      background: linear-gradient(180deg, #171104, #090909);
+      border: 1px solid rgba(255,215,120,.25);
+      border-radius: 24px;
+      padding: 36px 40px;
+      width: min(420px, 90%);
+      box-shadow:
+        0 0 60px rgba(255,215,120,.35),
+        0 30px 90px rgba(0,0,0,.9);
+      text-align: center;
+    }
+
+    #popup-box h2 {
+      color: var(--gold-1);
+      margin-bottom: 12px;
+    }
+
+    #popup-box p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    #popup-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: var(--gold-1);
+      font-size: 1.2rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    #popup-close:hover { color: #fff; }
+
+    /* ===== Discord Button ===== */
+    #discord-btn {
+      margin-top: 20px;
+      background-color: #5865F2; /* Discord blurple */
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    #discord-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(88,101,242,0.5), 0 0 40px rgba(88,101,242,0.3);
+    }
+
+    @keyframes shine { to { background-position: 200% center; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+
+<!-- POPUP -->
+<div id="popup-overlay">
+  <div id="popup-box">
+    <button id="popup-close">✕</button>
+    <h2>Welcome to Vertex Gold</h2>
+    <p>Hey! Welcome to my UBG site! I would appreciate it if you could join the Discord. Thanks!</p>
+    <a href="https://discord.gg/tnY8WCmHPj" target="_blank">
+      <button id="discord-btn">Join the Discord</button>
+    </a>
+  </div>
+</div>
+
+<header>
+  <div class="nav">
+    <div class="logo">VERTEX GOLD</div>
+    <div style="display:flex; gap:14px;">
+      <a href="index.html"><button>Hub</button></a>
+      <a href="play.html"><button>Games</button></a>
+      <a href="apps.html"><button>Apps</button></a>
+      <a href="viewer.html"><button>Viewer</button></a>
+    </div>
+  </div>
+</header>
+<section class="hero">
+  <div>
+    <h1>Vertex<br>Gold</h1>
+    <p>Welcome to the vertex of UBG. This is the peak, and there is nothing better.</p>
+    <div class="actions">
+      <a href="play.html"><button class="btn-primary">Play Now</button></a>
+      <a href="#" onclick="cloakTab()"><button class="btn-outline">Cloak Tab</button></a>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <h3>Live Platform Stats</h3>
+    <div class="stat"><span>Games Available</span><strong>128</strong></div>
+    <div class="stat"><span>Players Online</span><strong id="players-count">--</strong></div>
+    <div class="stat"><span>Status</span><strong>Online</strong></div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Ore Gaming. All rights reserved.
+</footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyD07fOBYVg0woUjkPcOBbVgCNi3ekCkI60",
+    authDomain: "goldubgserver.firebaseapp.com",
+    databaseURL: "https://goldubgserver-default-rtdb.europe-west1.firebasedatabase.app/",
+    projectId: "goldubgserver"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const connectionsRef = db.ref("connections");
+  const connectedRef = db.ref(".info/connected");
+  const playersCountEl = document.getElementById("players-count");
+
+  // Track connection
+  connectedRef.on("value", snap => {
+    if (snap.val() === true) {
+      const con = connectionsRef.push(true);
+      con.onDisconnect().remove();
+    }
+  });
+
+  // Count active connections
+  connectionsRef.on("value", snap => {
+    playersCountEl.textContent = snap.numChildren();
+  });
+
+  function cloakTab() {
+    const wikiTab = window.open("https://en.wikipedia.org", "_blank");
+    if (wikiTab) {
+      setTimeout(() => {
+        const cloakTab = window.open("about:blank", "_blank");
+        if (cloakTab) {
+          cloakTab.document.write(`
+            <style>html,body{margin:0;padding:0;height:100%;overflow:hidden;}iframe{border:none;width:100%;height:100%;}</style>
+            <iframe src="${window.location.href}"></iframe>
+          `);
+          cloakTab.document.close();
+        }
+      }, 400);
+    } else {
+      alert("Please allow pop-ups to use Cloak Tab.");
+    }
+  }
+</script>
+<script>
+// ===== Networked particles with mouse interaction =====
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let particlesArray = [];
+const particleCount = 80;
+const lineDistance = 120;
+let mouse = { x: null, y: null };
+
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+canvas.addEventListener('mousemove', e => {
+  mouse.x = e.x;
+  mouse.y = e.y;
+});
+
+canvas.addEventListener('mouseleave', () => {
+  mouse.x = null;
+  mouse.y = null;
+});
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 1;
+    this.speedX = (Math.random() - 0.5) * 0.5;
+    this.speedY = (Math.random() - 0.5) * 0.5;
+    this.color = 'rgba(255,200,90,0.2)';
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+    // Move slightly toward mouse
+    if (mouse.x && mouse.y) {
+      const dx = mouse.x - this.x;
+      const dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 100) {
+        this.x -= dx*0.005;
+        this.y -= dy*0.005;
+      }
+    }
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function connectParticles() {
+  for (let a = 0; a < particlesArray.length; a++) {
+    for (let b = a + 1; b < particlesArray.length; b++) {
+      const dx = particlesArray[a].x - particlesArray[b].x;
+      const dy = particlesArray[a].y - particlesArray[b].y;
+      const distance = Math.sqrt(dx*dx + dy*dy);
+      if (distance < lineDistance) {
+        ctx.strokeStyle = `rgba(255,200,90,${1 - distance/lineDistance} )`;
+        ctx.lineWidth = 0.7;
+        ctx.beginPath();
+        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function initParticles() {
+  particlesArray = [];
+  for (let i = 0; i < particleCount; i++) {
+    particlesArray.push(new Particle());
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particlesArray.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  connectParticles();
+  requestAnimationFrame(animateParticles);
+}
+
+initParticles();
+animateParticles();
+
+// ===== Popup close functionality =====
+const popup = document.getElementById("popup-overlay");
+document.getElementById("popup-close").onclick = () => {
+  popup.style.display = "none";
+};
+</script>
+
+</body>
+</html>
